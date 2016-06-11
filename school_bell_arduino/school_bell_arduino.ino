@@ -24,17 +24,6 @@ byte sino[8] = {
   B00000,
 };
 
-
-byte especial[8] = {
-  B00010,
-  B00100,
-  B01110,
-  B10001,
-  B11111,
-  B10000,
-  B01110,
-};
-
 void setup()
 {
   //Mostra uma mensagem quando liga
@@ -455,37 +444,12 @@ void getgps(TinyGPS &gps)
   {
       lcd.clear();
       lcd.setCursor(0,0);
-      lcd.print("    Noronha");
+      lcd.print("    School");
       lcd.setCursor(0,1);
-      lcd.print("  nas Estrelas");
+      lcd.print("     Bell");
       delay(3990);
       lcd.clear();
    }
-    if (second==30)            //Segundo da Mensagem
-  {
-      lcd.clear();
-      lcd.setCursor(0,0);
-      lcd.print("     Escola");
-      lcd.setCursor(0,1);
-      lcd.print("   Arquipelago");
-      delay(3990);
-      lcd.clear();
-   }
-  
-     if (second==30)            //Segundo da Mensagem
-  {
-      lcd.clear();
-      lcd.createChar(1, especial);
-      lcd.setCursor(0,0);
-      lcd.print("     Escola");
-      lcd.setCursor(0,1);
-      lcd.print("   Arquip");
-      lcd.write(byte(1));
-      lcd.print("lago");
-      delay(3990);
-      lcd.clear();
-   }
-
 }
 
 void loop()
