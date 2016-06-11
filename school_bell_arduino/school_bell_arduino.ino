@@ -1,8 +1,7 @@
 /*
-  Sino da Escola sincronizada com o relógio núclear dos satelítes de GPS
-  Desenvolvido por Nilson Santos "nilsonccl@gmail.com"
-  com base na biblíoteca "TinyGPS" e "LiquidCrystal"
-  Fernando de Noronha - PE - Brasil
+  Bell School synchronized with the nuclear clock of GPS satellites
+  based on the library " TinyGPS ","SoftwareSerial" and "LiquidCrystal"
+  Brazil
 */
 
 #include <TinyGPS.h>
@@ -10,9 +9,9 @@
 #include <LiquidCrystal.h>
 
 
-TinyGPS shield;  // Cria uma instância sobre um objeto da biblíoteca "TinyGPS"
-SoftwareSerial GPS(2,3); // configure a porta "software serial" 
-LiquidCrystal lcd(8, 10, 9, 4, 5, 6, 7);  // Configuração da ligação do LCD
+TinyGPS shield;  // It creates an instance of an object from the library "TinyGPS"
+SoftwareSerial GPS(2,3); // configure the port "Software Serial"
+LiquidCrystal lcd(8, 10, 9, 4, 5, 6, 7);  // LCD connection setup
 
 byte sino[8] = {
   B00100,
@@ -26,7 +25,7 @@ byte sino[8] = {
 
 void setup()
 {
-  //Mostra uma mensagem quando liga
+  //Displays a message when you power on
   lcd.begin(16, 2);
   lcd.clear();
   lcd.setCursor(0,0);
@@ -68,14 +67,14 @@ void setup()
   lcd.clear();
 }
 
-// A função "getgps" irá interpretar dados do GPS e exibir no monitor serial
+// The " getgps " will interpret GPS data and display the serial monitor
 void getgps(TinyGPS &gps)
 {
   int year;
   byte month, day, hour, minute, second, hundredths;
   shield.crack_datetime(&year,&month,&day,&hour,&minute,&second,&hundredths);
  
- //Correção de fuso-horario
+ //Correction time - schedule
   hour = hour - 2;
   if (hour=2)
   {
@@ -91,7 +90,7 @@ void getgps(TinyGPS &gps)
   }
  
 
-  // Mostra Hora
+  // Time shows
   lcd.createChar(0, sino);
   lcd.setCursor(0,0);
   lcd.print("Hora: ");
@@ -125,10 +124,10 @@ void getgps(TinyGPS &gps)
     lcd.print(second, DEC);
   }
   
-  //Alarme de "Entrada às 7:30"
-  if (hour==7)                 //Hora do alarme
+  //Bell "Entrance at 7:30 am"
+  if (hour==7)                 //bell time
   {
-    if (minute==30)            //Minuto do alarme
+    if (minute==30)            //bell Minute
     {
     if (second<5)
     {
@@ -140,10 +139,10 @@ void getgps(TinyGPS &gps)
     }
   }
 }
-  //Alarme de "Intervalo às 9:30"
-  if (hour==9)                //Hora do alarme
+  //Bell "Interval at 9:30 am"
+  if (hour==9)                //bell time
   {
-    if (minute==30)            //Minuto do alarme
+    if (minute==30)            //bell Minute
     {
     if (second<5)
     {
@@ -155,10 +154,10 @@ void getgps(TinyGPS &gps)
     }
   }
 }
-  //Alarme de "Retorno do Intervalo às 10:00"
-  if (hour==10)                //Hora do alarme
+  //Bell "Interval Return at 10:00 am"
+  if (hour==10)                //bell time
   {
-    if (minute==0)            //Minuto do alarme
+    if (minute==0)            //bell Minute
     {
     if (second<5)
     {
@@ -170,28 +169,10 @@ void getgps(TinyGPS &gps)
     }
   }
 }
-  //Alarme de "Saída às 12:00"
-  if (hour==12)                //Hora do alarme
+  //Bell "Check out at 12:00 pm"
+  if (hour==12)                //bell time
   {
-    if (minute==0)            //Minuto do alarme
-    {
-    if (second<5)
-    {
-      digitalWrite(13, HIGH);
-    } 
-    else if (second>5)
-    {
-      digitalWrite(13, LOW);
-    }
-  }
-}
-
-  //Turno da Trarde
-
-  //Alarme de "1ª aula às 13:10"
-  if (hour==13)                //Hora do alarme
-  {
-    if (minute==10)            //Minuto do alarme
+    if (minute==0)            //bell Minute
     {
     if (second<5)
     {
@@ -204,10 +185,12 @@ void getgps(TinyGPS &gps)
   }
 }
 
-  //Alarme de "2ª aula às 14:00"
-  if (hour==14)                //Hora do alarme
+  //Afternoon shift
+
+  //Bell "1st class at 1:10 pm"
+  if (hour==13)                //bell time
   {
-    if (minute==0)            //Minuto do alarme
+    if (minute==10)            //bell Minute
     {
     if (second<5)
     {
@@ -220,10 +203,10 @@ void getgps(TinyGPS &gps)
   }
 }
 
-  //Alarme da "3ª aula às 14:50"
-  if (hour==14)                //Hora do alarme
+  //Bell "2nd class at 2:00 pm"
+  if (hour==14)                //bell time
   {
-    if (minute==50)            //Minuto do alarme
+    if (minute==0)            //bell Minute
     {
     if (second<5)
     {
@@ -236,10 +219,10 @@ void getgps(TinyGPS &gps)
   }
 }
 
-  //Alarme do "Intervalo às 15:40"
-  if (hour==15)                //Hora do alarme
+  //Bell "3rd class at 2:50 pm"
+  if (hour==14)                //bell time
   {
-    if (minute==40)            //Minuto do alarme
+    if (minute==50)            //bell Minute
     {
     if (second<5)
     {
@@ -252,10 +235,10 @@ void getgps(TinyGPS &gps)
   }
 }
 
-  //Alarme de "Retorno do Intervalo às 16:00"
-  if (hour==16)                //Hora do alarme
+  //Bell "Interval at 3:40 pm"
+  if (hour==15)                //bell time
   {
-    if (minute==0)            //Minuto do alarme
+    if (minute==40)            //bell Minute
     {
     if (second<5)
     {
@@ -268,10 +251,10 @@ void getgps(TinyGPS &gps)
   }
 }
 
-  //Alarme de "4ª aula às 16:50"
-  if (hour==16)                //Hora do alarme
+  //Bell "Interval Return at 4:00 pm"
+  if (hour==16)                //bell time
   {
-    if (minute==50)            //Minuto do alarme
+    if (minute==0)            //bell Minute
     {
     if (second<5)
     {
@@ -284,10 +267,10 @@ void getgps(TinyGPS &gps)
   }
 }
 
-  //Alarme de "Saída às 17:40"
-  if (hour==17)                //Hora do alarme
+  //Bell "4th class at 4:50 pm"
+  if (hour==16)                //bell time
   {
-    if (minute==40)            //Minuto do alarme
+    if (minute==50)            //bell Minute
     {
     if (second<5)
     {
@@ -300,10 +283,26 @@ void getgps(TinyGPS &gps)
   }
 }
 
-  //Horários Noturnos
+  //Bell "Check out at 5:40 pm"
+  if (hour==17)                //bell time
+  {
+    if (minute==40)            //bell Minute
+    {
+    if (second<5)
+    {
+      digitalWrite(13, HIGH);
+    } 
+    else if (second>5)
+    {
+      digitalWrite(13, LOW);
+    }
+  }
+}
+
+  //Night shift
  
-  //Alarme de "1ª aula às 18:40"
-  if (hour==18)                //Hora do alarme
+  //Bell "1st class at 6:40 pm"
+  if (hour==18)                //bell time
   {
     if (minute==40)            //Minuto do alarme
     {
@@ -318,10 +317,10 @@ void getgps(TinyGPS &gps)
   }
 }
 
-  //Alarme de "2ª aula às 19:20"
-  if (hour==19)                //Hora do alarme
+  //Bell "2nd class at 7:20 pm"
+  if (hour==19)                //bell time
   {
-    if (minute==20)            //Minuto do alarme
+    if (minute==20)            //bell Minute
     {
     if (second<5)
     {
@@ -334,8 +333,8 @@ void getgps(TinyGPS &gps)
   }
 }
 
-  //Alarme da "3ª aula às 20:00"
-  if (hour==20)                //Hora do alarme
+  //Bell "3rd class at 8:00 pm"
+  if (hour==20)                //bell time
   {
     if (minute==0)            //Minuto do alarme
     {
@@ -350,10 +349,10 @@ void getgps(TinyGPS &gps)
   }
 }
 
-  //Alarme do "Intervalo às 20:40"
-  if (hour==20)                //Hora do alarme
+  //Bell "Interval at 8:40 pm"
+  if (hour==20)                //bell time
   {
-    if (minute==40)            //Minuto do alarme
+    if (minute==40)            //bell Minute
     {
     if (second<5)
     {
@@ -366,8 +365,8 @@ void getgps(TinyGPS &gps)
   }
 }
 
-  //Alarme de "Retorno do Intervalo às 20:45"
-  if (hour==20)                //Hora do alarme
+  //Bell "Interval Return at 8:45 pm"
+  if (hour==20)                //bell time
   {
     if (minute==45)            //Minuto do alarme
     {
@@ -382,10 +381,10 @@ void getgps(TinyGPS &gps)
   }
 }
 
-  //Alarme de "4ª aula às 21:20"
-  if (hour==21)                //Hora do alarme
+  //Bell "4th class at 9:20 pm"
+  if (hour==21)                //bell time
   {
-    if (minute==20)            //Minuto do alarme
+    if (minute==20)            //bell Minute
     {
     if (second<5)
     {
@@ -398,8 +397,8 @@ void getgps(TinyGPS &gps)
   }
 }
 
-  //Alarme de "Saída às 22:00"
-  if (hour==22)                //Hora do alarme
+  //Bell "Check out at 10:00 pm"
+  if (hour==22)                //bell time
   {
     if (minute==0)            //Minuto do alarme
     {
@@ -414,7 +413,7 @@ void getgps(TinyGPS &gps)
   }
 }
 
-  // Mostra Data
+  // Shows Date
   lcd.setCursor(0,1);
   lcd.print("Data: ");  
     if (day<10)
@@ -439,8 +438,8 @@ void getgps(TinyGPS &gps)
   lcd.print("/");
   lcd.print(year, DEC);  
 
-  //Mostrar mensagem
-  if (second==10)            //Segundo da Mensagem
+  //shows a message
+  if (second==10)            //second showing message
   {
       lcd.clear();
       lcd.setCursor(0,0);
@@ -455,12 +454,12 @@ void getgps(TinyGPS &gps)
 void loop()
 {
   byte a;
-  if ( GPS.available() > 0 ) // se houver dados provenientes do GPS
+  if ( GPS.available() > 0 ) // if data from the GPS
   {
-    a = GPS.read();          // obter o byte de dados
-    if(shield.encode(a))     // se houver dados válidos GPS...
+    a = GPS.read();          // to obtain the data byte
+    if(shield.encode(a))     // if GPS valid data ...
     {
-      getgps(shield);        // em seguida, pegue os dados e exibi-lo na tela LCD
+      getgps(shield);        // then take the data and display it on the LCD screen
     }
   }  
 }
